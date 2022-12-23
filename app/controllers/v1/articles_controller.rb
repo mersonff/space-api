@@ -40,7 +40,7 @@ module V1
     private
 
     def article_params
-       params.require(:article).permit(:title, :url, :imageUrl, :newsSite, :summary, :publishedAt, :featured)
+      params.require(:article).permit(:title, :url, :imageUrl, :newsSite, :summary, :publishedAt, :featured)
     end
 
     def set_article

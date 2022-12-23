@@ -50,7 +50,7 @@ RSpec.describe 'Articles' do
 
   describe 'PATCH /articles/:id' do
     let(:article) { create(:article, title: 'old title') }
-    let(:article_params) do 
+    let(:article_params) do
       { article: { title: 'new title' } }
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.articles do
   json.array! @loading_service.records, partial: 'v1/articles/article', as: :article
 end
