@@ -1,0 +1,4 @@
+:schedule:
+  retrieve_articles:
+    cron: "0 9 * * * America/Sao_Paulo"
+    class: RetrieveArticlesJob
