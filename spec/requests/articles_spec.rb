@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Articles' do
   describe 'GET /articles' do
-    let(:articles) { create_list(:article, 15) }
+    let!(:articles) { create_list(:article, 10) }
 
     it 'works! (now write some real specs)' do
       get v1_articles_path
@@ -32,11 +32,13 @@ RSpec.describe 'Articles' do
   end
 
   describe 'POST /articles' do
-    let(:article_params) { attributes_for(:article) }
+    let(:article_params) do
+      { article: attributes_for(:article) }
+    end
 
     it 'works! (now write some real specs)' do
       post v1_articles_path, params: article_params
-      expect(response).to have_http_status(:created)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'creates a new article', :aggregate_failures do
@@ -48,7 +50,9 @@ RSpec.describe 'Articles' do
 
   describe 'PATCH /articles/:id' do
     let(:article) { create(:article, title: 'old title') }
-    let(:article_params) { { article: { title: 'new title' }.to_json } }
+    let(:article_params) do 
+      { article: { title: 'new title' } }
+    end
 
     it 'works! (now write some real specs)' do
       patch v1_article_path(article), params: article_params
