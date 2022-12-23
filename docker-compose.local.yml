@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    container_name: space_app-db
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: space_app
+      POSTGRES_PASSWORD: space_app
+    ports: 
+      - '5432:5432'
+    volumes:
+      - space_app-postgres:/var/lib/postgresql/data
+
+  redis:
+    container_name: space_app-redis
+    image: redis:7.0
+    ports:
+      - '6379:6379'
+    volumes:
+      - space_app-redis:/var/lib/redis/data
+    command: 'redis-server'
+
+  space_app:
+    container_name: space_app-app
+    build:
+      context: .
+      dockerfile: ./Dockerfile.local
+    volumes:
+      - .:/space_app
+    links:
+      - postgres
+      - redis
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on: 
+      - postgres
+  
+  mailcatcher:
+    image: yappabe/mailcatcher
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+
+volumes:
+  space_app-postgres:
+  space_app-redis:
