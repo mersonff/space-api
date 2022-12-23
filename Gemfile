@@ -8,6 +8,7 @@ ruby '3.1.2'
 gem 'bootsnap', require: false
 gem 'devise_token_auth'
 gem 'dotenv-rails', '~> 2.7.6'
+gem 'httparty'
 gem 'image_processing', '~> 1.2'
 gem 'jbuilder'
 gem 'pg', '~> 1.1'

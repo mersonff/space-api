@@ -1,0 +1,190 @@
+openapi: 3.0.3
+info:
+  title: Space API
+  description: |-
+    API para registro de artigos baseado na [Space Flight News](https://api.spaceflightnewsapi.net/)
+    
+    Links úteis:
+    - [Repositório](https://github.com/mersonff/space-api)
+  version: 1.0.11
+
+tags:
+  - name: article
+    description: Acesse artigos persistidos
+  - name: home
+    description: Mensagem de saldação
+
+paths:
+  /v1/articles/{ArticleId}:
+    put:
+      tags:
+        - article
+      summary: Atualiza um artigo
+      description: Atualiza um artigo pelo id
+      parameters:
+        - name: ArticleId
+          in: path
+          description: ID do artigo a ser pesquisado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Atualiza um artigo existente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article' 
+
+    get:
+      tags:
+        - article
+      summary: Ache um artigo pelo ID
+      description: Retorna um único artigo
+      parameters:
+        - name: ArticleId
+          in: path
+          description: ID do artigo a ser achado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+
+    delete:
+      tags:
+        - article
+      summary: Deleta um artigo
+      description: Deleta um artigo
+      parameters:
+        - name: ArticleId
+          in: path
+          description: ID do artigo a ser deletado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: no content          
+         
+  /v1/articles:
+    post:
+      tags:
+        - article
+      summary: Adiciona um novo artigo
+      description: Adiciona um artigo
+      requestBody:
+        description: Adiciona um novo artigo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article' 
+
+    get:
+      tags:
+        - article
+      summary: Lista todos os artigos
+      description: Lista todos os artigos cadastrados
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Article'
+
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        title:
+          type: string
+          example: New title
+        imgUrl: 
+          type: string
+          format: url
+          example: https://picsum.photos/200
+        featured:
+          type: boolean
+          example: false
+        url:
+          type: string
+          format: url
+          example: https://picsum.photos/200
+        newsSite:
+          type: string
+          example: NASASpaceflight
+        publishedAt:
+          type: string
+          format: datetime
+          example: '2022-12-23T17:01:11.000Z'
+        summary:
+          type: string
+          format: url
+          example: 2022 has marked another busy chapter for the 
+            International Space Station (ISS). Along with its 
+            constant plethora of scientific and engineering 
+            experiments, the Station saw the first docking of 
+            Starliner, the all-private Axiom-1 mission, and new 
+            hardware installed to increase the lifespan of 
+            humanity’s collaborative space laboratory.
+        launchs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Launch'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        provider:
+          type: string
+          example: example
+    
+    Launch:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        provider:
+          type: string
+          example: example
